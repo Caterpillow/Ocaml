@@ -1,6 +1,6 @@
-(*Jolanta Mozyrska*)
-(*jm406254*)
-(*"arytmetyka.ml"*)
+(*Jolanta Mozyrska
+	406254
+Code reviewer: Lara Citko*)
 open List
 type wartosc  = |Przedzial of float * float
 				|Dopelnienie of float * float
@@ -69,7 +69,7 @@ let czy_nan a b =
 		|(_,Przedzial(b_pocz,b_kon)) ->
 			if not(b_pocz = b_pocz)
 				then true
-			else false
+			else false 
 		|(_,_) -> false
 
 let rec plus a b = 
@@ -164,3 +164,45 @@ let podzielic a b =
 	match b with
 	| Przedzial(0.,0.) -> Przedzial(nan,nan)
 	|_ -> razy a (odwroc b)
+
+(* Testy:
+	let ( =. ) (x : float) (y : float) =
+let e = 1e-6 and d = x -. y in ~-.e < d && d < e;;
+let a = max_wartosc ( minus ( wartosc_dokladnosc (2.000000) 
+	(1.000000) ) ( minus ( wartosc_dokladnosc (0.000000) (0.000000) )
+	 ( podzielic ( wartosc_dokladna (3.000000) ) 
+	 	( wartosc_dokladnosc (-7.000000) (2.000000) ) ) ) ) ;;
+assert (a =. 1.5998319327731092);;
+let a = max_wartosc ( minus ( wartosc_dokladnosc (-5.000000) 
+	(3.000000) ) ( wartosc_od_do (-6.000000) (-1.000000) ) ) ;;
+assert (a =. 1.15000000000000036);;
+let a = in_wartosc ( podzielic ( podzielic ( wartosc_dokladnosc 
+	(4.000000) (3.000000) ) ( wartosc_dokladna (-3.000000) ) ) 
+	( podzielic ( wartosc_dokladna (-7.000000) ) ( wartosc_dokladna (4.000000) ) ) )
+	 (-4.000000);;
+assert (a = false);;
+let a = min_wartosc ( podzielic ( wartosc_dokladna (0.000000) ) 
+	( wartosc_dokladna (4.000000) ) ) ;;
+assert (a =. 0.);;
+let a = in_wartosc ( razy ( wartosc_dokladna (-2.000000) ) 
+	( wartosc_od_do (-1.000000) (2.000000) ) ) (2.000000);;
+assert (a = true);;
+let a = max_wartosc ( podzielic ( wartosc_dokladnosc (0.000000) (0.000000) )
+ ( wartosc_dokladna (4.000000) ) ) ;;
+assert (a =. 0.);;
+let a = in_wartosc ( podzielic ( wartosc_dokladnosc (1.000000) (0.000000) ) 
+	( wartosc_od_do (5.000000) (8.000000) ) ) (-8.000000);;
+assert (a = false);;
+let a = in_wartosc ( razy ( wartosc_dokladnosc (1.000000) (0.000000) ) 
+	( wartosc_dokladna (2.000000) ) ) (2.000000);;
+assert (a = true);;
+let a = sr_wartosc ( razy ( wartosc_dokladna (6.000000) ) 
+	( wartosc_dokladna (0.000000) ) ) ;;
+assert (a =. 0.);;
+let a = in_wartosc ( podzielic ( wartosc_dokladnosc (-10.000000) (0.000000) ) 
+( minus ( wartosc_dokladnosc (0.000000) (4.000000) ) ( wartosc_od_do (7.000000) 
+(7.000000) ) ) ) (0.000000);;
+assert (a = false);;
+let a = sr_wartosc ( podzielic ( wartosc_dokladna (8.000000) ) 
+	( wartosc_dokladna (0.000000) ) ) ;;
+assert ((classify_float a) == FP_nan);;*)
